@@ -12,20 +12,26 @@ bool isPiece (char piece) {
     return false;
 }
 
+//Checks if a pawn move is legal at all (excluding en passent, as that requires knowledge of the previous move)
 bool pawnMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
     bool isWhite = pieceWhite(board, srcRank, srcFile);
     
-    if(srcRank == destRank || //If no rank change or
+    if(srcRank == destRank ||                   //If no rank change or
             isWhite != (srcRank < destRank) ||  //retreating pawns or
-            abs(srcRank - destRank) > 2) //Advance more than max (2)
+            abs(srcRank - destRank) > 2) {      //Advance more than max (2)
         return false;
-    
-    
-    if(abs(srcFile - destFile) == 1 && abs(srcRank - destRank) == 1) {
+    } else if(abs(srcFile - destFile) == 1 && abs(srcRank - destRank) == 1) {
         //Capture Check
+        
+        return false;
+    } else if(abs(srcFile - destFile) != 0) {
+        return false; //Pawns can only change file on capture
+    } else if(abs(srcRank - destRank) == 1) {
+        return true;    //Moved the right direction, stayed in its file, only moved 1 is always legal
     }
     
-    return false;
+    //First check if this is the pawn's initial deployment, if so allow an advance of 2, else disallow
+    return ((isWhite && srcRank == 2)||(!isWhite && srcRank == 7)) && abs(srcRank - destRank) == 2;
 }
 
 bool rookMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {

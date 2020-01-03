@@ -34,11 +34,11 @@ all: dispTest notationParserTest
 #	Executables
 #
 
-dispTest: dispTest.o chessDisp.o chessBoard.o
+dispTest: dispTest.o chessDisp.o chessBoard.o chessGame.o
 	$(CC) $(CFLAGS) -o dispTest $^ $(CLIBS)
 	$(ECHO)
 
-notationParserTest: notationParserTest.o notationParser.o chessDisp.o chessBoard.o piece.o
+notationParserTest: notationParserTest.o notationParser.o chessDisp.o chessBoard.o piece.o chessGame.o
 	$(CC) $(CFLAGS) -o notationParserTest $^ $(CLIBS)
 	$(ECHO)
 
@@ -62,6 +62,9 @@ chessBoard.o: chessBoard.c chessBoard.h
 
 piece.o: piece.c piece.h
 	$(CC) $(CFLAGS) -c -o piece.o piece.c
+
+chessGame.o: chessGame.c chessGame.h
+	$(CC) $(CFLAGS) -c -o chessGame.o chessGame.c
 
 #
 #	Utils

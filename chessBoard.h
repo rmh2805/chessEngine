@@ -6,7 +6,6 @@
 #include <stdbool.h>
 
 #include "chessConst.h"
-#include "piece.h"
 
 struct board_s {
     char ** data;
@@ -23,7 +22,5 @@ char pieceType (board_t board, int rank, char file);
 
 void setPiece(board_t board, bool isWhite, char type, int rank, char file);
 void clearCell(board_t board, int rank, char file);
-
-void startBoard(board_t board);
 
 #endif //_CHESS_BOARD_H_

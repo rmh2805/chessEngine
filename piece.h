@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "chessboard.h"
+#include "chessBoard.h"
 
 #define kPawnFlag 'P'
 #define kKnightFlag 'N'
