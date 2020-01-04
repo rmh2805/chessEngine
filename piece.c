@@ -22,8 +22,11 @@ bool pawnMove (board_t board, char srcFile, int srcRank, char destFile, int dest
         return false;
     } else if(abs(srcFile - destFile) == 1 && abs(srcRank - destRank) == 1) {
         //Capture Check
+        if(cellEmpty(board, destRank, destFile))
+            return false;
         
-        return false;
+        return isWhite == pieceWhite(board, destRank, destFile);
+        
     } else if(abs(srcFile - destFile) != 0) {
         return false; //Pawns can only change file on capture
     } else if(abs(srcRank - destRank) == 1) {
