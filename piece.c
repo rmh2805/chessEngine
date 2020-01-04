@@ -37,27 +37,27 @@ bool pawnMove (board_t board, char srcFile, int srcRank, char destFile, int dest
     return ((isWhite && srcRank == 2)||(!isWhite && srcRank == 7)) && abs(srcRank - destRank) == 2;
 }
 
-bool rookMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool rookMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     return false;
 }
 
-bool knightMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool knightMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     return false;
 }
 
-bool bishopMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool bishopMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     return false;
 }
 
-bool queenMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool queenMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     return false;
 }
 
-bool kingMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool kingMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     return false;
 }
 
-bool canMove (board_t board, char srcFile, int srcRank, char destFile, int destRank) {
+bool canMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     if(board == NULL)
         return false;
     

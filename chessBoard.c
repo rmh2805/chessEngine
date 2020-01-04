@@ -91,3 +91,14 @@ void clearCell(board_t board, int rank, char file) {
     board->data[rank - 1][(file - 'a') * 2 + 1] = ' ';
 }
 
+void movePiece(board_t board, int srcRank, char srcFile, int destRank, char destFile) {
+    if(board == NULL)
+        return;
+    
+    char color = board->data[srcRank - 1][(srcFile - 'a') * 2];
+    char type = board->data[srcRank - 1][(srcFile - 'a') * 2 + 1];
+    
+    clearCell(board, srcRank, srcFile);
+    board->data[destRank - 1][(destFile - 'a') * 2] = color;
+    board->data[destRank - 1][(destFile - 'a') * 2 + 1] = type;
+}

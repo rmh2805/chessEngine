@@ -20,6 +20,6 @@ extern const int kNumPieceTypes;
 
 bool isPiece (char piece);
 
-bool canMove (board_t board, char srcFile, int srcRank, char destFile, int destRank);
+bool canMove (board_t board, int srcRank, char srcFile, int destRank, char destFile);
 
 #endif //_PIECE_H_

@@ -23,13 +23,11 @@ static int numCols = 0;
 #define GET_LEFT_COL(fileIn) kMinCol + (int)(fileIn - 'a') * kCellWidth
 #define GET_TOP_ROW(rankIn) (kMaxRow - (rankIn) * kCellHeight) + 1
 
-int startDisp(int* lNumRows, int* lNumCols) {
+int startDisp() {
     //Start the curses environment and find the boundries of the window
     initscr();  // Start curses mode
     
-    getmaxyx(stdscr, *lNumRows, *lNumCols);
-    numRows = *lNumRows;
-    numCols = *lNumCols;
+    getmaxyx(stdscr, numRows, numCols);
 
     if(numRows < kBoardHeight + 6 || numCols < kBoardWidth + 6){ 
         endwin(); 

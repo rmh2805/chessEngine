@@ -22,5 +22,6 @@ char pieceType (board_t board, int rank, char file);
 
 void setPiece(board_t board, bool isWhite, char type, int rank, char file);
 void clearCell(board_t board, int rank, char file);
+void movePiece(board_t board, int srcRank, char srcFile, int destRank, char destFile);
 
 #endif //_CHESS_BOARD_H_

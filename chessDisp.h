@@ -8,7 +8,7 @@
 #include "chessConst.h"
 #include "chessBoard.h"
 
-int startDisp (int *numRows, int* numCols);
+int startDisp ();
 
 int stopDisp ();
 
