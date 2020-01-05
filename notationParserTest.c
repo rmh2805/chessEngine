@@ -57,19 +57,19 @@ int main (int argc, char**argv) {
     }
     
     
-    startBoard(board);
+   
+    setPiece(board, false, kBishopFlag, 4, 'd');
+    setPiece(board, false, kKingFlag, 8, 'h');
+    setPiece(board, true, kKingFlag, 8, 'd');
+    setPiece(board, true, kQueenFlag, 6, 'd');
     
     drawBoard(board);
-    drawTurn("Initial Board Config");
     getch();
     
-    testMove(board, buf, 2, 'a', 5, 'a');
+    testMove(board, buf, 4, 'd', 6, 'b');
+    testMove(board, buf, 6, 'b', 8, 'd');
+    testMove(board, buf, 6, 'd', 8, 'd');
     
-    testMove(board, buf, 2, 'b', 4, 'b');
-    
-    testMove(board, buf, 2, 'c', 3, 'c');
-    
-    testMove(board, buf, 2, 'd', 4, 'c');
     
     stopDisp();
     deleteBoard(board);    

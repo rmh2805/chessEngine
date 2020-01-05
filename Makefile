@@ -13,7 +13,7 @@ ECHO=@echo
 #
 
 # C Flags
-CLIBS=-lm -lncursesw
+CLIBS=-lm -lncurses
 CFLAGS=-Wall -std=c99 -Wextra -pedantic -ggdb
 
 # Misc
