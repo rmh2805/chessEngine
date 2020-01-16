@@ -57,6 +57,14 @@ bool pieceWhite(board_t board, int rank, char file) {
     return board->data[rank - 1][(file - 'a') * 2] == kWhiteFlag;
 }
 
+bool pieceBlack(board_t board, int rank, char file) {
+    
+    if(board == NULL)
+        return false;
+    
+    return board->data[rank - 1][(file - 'a') * 2] == kBlackFlag;
+}
+
 bool cellEmpty(board_t board, int rank, char file) {
     if(board == NULL)
         return true;

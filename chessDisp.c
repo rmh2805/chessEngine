@@ -58,7 +58,7 @@ void drawCell(int rank, char file) {
     int minCol = GET_LEFT_COL(file);
     
     int palette = whitePalette;
-    if(((int)(file - 'a') + rank - 1) % 2 == 1)
+    if(((int)(file - 'a') + rank - 1) % 2 != 1)
         palette = blackPalette;
     
     wattron(stdscr, COLOR_PAIR(palette));

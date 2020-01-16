@@ -11,7 +11,14 @@
 
 #include "chessBoard.h"
 
-char* notationToMove (board_t board, const char * move);
+extern const char standardMoveFlag;
+extern const char enPassentFlag;
+extern const char queenCastleFlag;
+extern const char kingCastleFlag;
+extern const char checkFlag;
+extern const char mateFlag;
+
+char* notationToMove (board_t board, const char * move, bool whiteMove);
 
 
 

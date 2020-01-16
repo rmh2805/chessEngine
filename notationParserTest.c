@@ -36,7 +36,7 @@ void testMove(board_t board, char* buf, int srcRank, char srcFile, int destRank,
     getch();
 }
 
-int main (int argc, char**argv) {
+int testMoveChecks() {
     board_t board = makeBoard();
     if(board == NULL) {
         fprintf(stderr, "Failed to allocate a board, exiting");
@@ -69,11 +69,49 @@ int main (int argc, char**argv) {
     testMove(board, buf, 4, 'd', 6, 'b');
     testMove(board, buf, 6, 'b', 8, 'd');
     testMove(board, buf, 6, 'd', 8, 'd');
+    testMove(board, buf, 8, 'd', 8, 'h');
     
     
     stopDisp();
     deleteBoard(board);    
         
     return EXIT_SUCCESS;
+}
+
+void testNotationParse(board_t board, char* notation, bool isWhite) {
+    char* result = notationToMove(board, notation, isWhite);
+    
+    printf("(%c) %s: ", (isWhite) ? 'W' : 'B', notation);
+    if(result == NULL) {
+        printf("Illegal move or failure in parse");
+    }
+    
+    
+    printf("\n");
+}
+
+int main (int argc, char**argv) {
+    if(argc < 3) {
+        fprintf(stderr, "Usage: %s <isWhite y/n> <Move to check>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+    
+    board_t board = makeBoard();
+    if(board == NULL) {
+        fprintf(stderr, "Failed to allocate the board\n");
+        return EXIT_FAILURE;
+    }
+    
+    
+    startBoard(board);
+    for(int i = 1; i < argc - 1; i += 2) {
+        bool isWhite = argv[i][0] == 'y';
+        testNotationParse(board, argv[i] + 1, isWhite);
+    }
+    
+    
+    printf("\nFinished Parsing\n\n");
+    
+    return EXIT_SUCCESS; 
 }
 

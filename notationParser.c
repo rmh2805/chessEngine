@@ -1,23 +1,132 @@
 #include "notationParser.h"
 
+const char standardMoveFlag = 'n';
+const char queenCastleFlag = 'q';
+const char kingCastleFlag = 'k';
+const char checkFlag = 'c';
+const char mateFlag = 'm';
+
 char* parsePawn (board_t board, const char* move, bool whiteMove) {
 	if(strlen(move) == 2) {
 		//This is a simple move, no disambiguation ever needed. Format is just 'destFile''destRank'
 	}
 	
 	if(strlen(move) >= 4) {
-		//This is a pawn capture, possibly with en passent. 'srcFile''x''destFile''destRank'
+		//This is a pawn capture, possibly with en passent (CHECK). 'srcFile''x''destFile''destRank'
 	}
 	
 	return NULL;
 }
 
-char* parseRook (board_t board, const char* move, bool whiteMove) {
+char* parseKing (board_t board, const char* move, bool whiteMove) {
+	if(strlen(move) == 3) {
+		//This is a simple move, no disambiguation 'K''destFile''destRank'
+	}
+	
+	return NULL;
+}
+
+
+// Standard: ['n', Source Rank, Source File, Dest Rank, Dest File]
+// En passent: ['e', Source Rank, Source File, Dest Rank, Dest File]
+// Queen-side castle: ['q']
+// King-side castle: ['k']
+// Check: ['c']
+// Mate: ['m']
+// Definitely Illegal: NULL
+// All legal returns (except standard) must have further checks for legality, as they all have historical state dependancies
+// All legal returns must be freed by caller
+char* notationToMove (board_t board, const char * move, bool whiteMove) {
+    if(board == NULL || move == NULL)
+        return NULL;
+        
+    if(strlen(move) < 1)
+		return NULL;
+    
+    char* toReturn = malloc(1 * sizeof(char));
+    if(toReturn == NULL) 
+		return NULL;
+		
+    //==========================<Odd Parsing>=========================//
+    if(move[0] == '+') {
+		toReturn[0] = checkFlag;
+		return toReturn;
+	}
+	
+	if(move[0] == '#') {
+		toReturn[0] = mateFlag;
+		return toReturn;
+	}
+	
+    if(strncmp("0-0", move, 3) == 0) {
+        int startRank = (whiteMove) ? 1 : 8;
+        
+        const char kKingFile = 'e';
+        char startFile, endFile, rookFile, returnFlag;
+        
+        if(pieceType(board, startRank, kKingFile) != kKingFlag || !colorMatch(board, startRank, kKingFile, whiteMove)) {
+            //If the wrong piece (not the proper king) is in the king's square
+            free(toReturn);
+            return NULL;
+        }
+        
+        
+        if(strcmp("0-0", move) == 0) {
+            //Check if king's castle is clear and (possibly) set
+            startFile = 'f';
+            endFile = 'g';
+            rookFile = 'h';
+            returnFlag = kingCastleFlag;
+        }
+        
+        if(strcmp("0-0-0", move) == 0) {
+            //Check if queen's castle is clear and (possibly) set
+            startFile = 'b';
+            endFile = 'd';
+            rookFile = 'a';
+            returnFlag = queenCastleFlag;
+        }
+        
+        if(pieceType(board, startRank, rookFile) != kRookFlag || !colorMatch(board, startRank, rookFile, whiteMove)) {
+            free(toReturn);
+            return NULL;
+        }
+        
+        for(char i = startFile; i <= endFile; i++) {
+            if(!cellEmpty(board, startRank, i)) {
+                free(toReturn);
+                return NULL;
+            }
+        }
+        
+        toReturn[0] = returnFlag;
+        return toReturn;
+    }
+	
+	
+    //=========================<Check For Odd Pieces>=========================//
+    if(!isPiece(toReturn[0])) {
+        free(toReturn);
+		return parsePawn(board, move, whiteMove);
+	} 
+    
+    char pieceType = toReturn[0];
+    if(pieceType == kKingFlag) {
+        free(toReturn);
+        return parseKing(board, move, whiteMove);
+    }
+	
+    //=========================<Check Standard Piece>=========================//
 	char moveLen = strlen(move);
 	if(moveLen < 3)
 		return NULL;
-	
-	char srcRank = 0;
+        
+	toReturn = realloc(toReturn, 5 * sizeof(char));
+	if(toReturn == NULL)
+        return NULL;
+    
+    
+    char srcRank = 0;
 	char srcFile = 0;
 	char destRank = move[moveLen - 1];
 	char destFile = move[moveLen - 2];
@@ -53,115 +162,11 @@ char* parseRook (board_t board, const char* move, bool whiteMove) {
 		//src Given
 	}
 	
-	char* toReturn = malloc(5 * sizeof(char));
+	
 	toReturn[0] = 'n';
 	toReturn[1] = srcRank;
 	toReturn[2] = srcFile;
 	toReturn[3] = destRank;
 	toReturn[4] = destFile;
-	return NULL;
-}
- 
-char* parseKnight (board_t board, const char* move, bool whiteMove) {
-	if(strlen(move) == 3) {
-		//This is a simple move, no disambiguation 'K''destFile''destRank'
-	}
-	
-	return NULL;
-}
-
-char* parseBishop (board_t board, const char* move, bool whiteMove) {
-	if(strlen(move) == 3) {
-		//This is a simple move, no disambiguation 'B''destFile''destRank'
-	}
-	
-	return NULL;
-}
-
-char* parseQueen (board_t board, const char* move, bool whiteMove) {
-	if(strlen(move) == 3) {
-		//This is a simple move, no disambiguation 'Q''destFile''destRank'
-	}
-	
-	return NULL;
-}
-
-char* parseKing (board_t board, const char* move, bool whiteMove) {
-	if(strlen(move) == 3) {
-		//This is a simple move, no disambiguation 'K''destFile''destRank'
-	}
-	
-	return NULL;
-}
-
-// Standard: ['n', Source Rank, Source File, Dest Rank, Dest File]
-// En passent: ['e', Source Rank, Source File, Dest Rank, Dest File]
-// Queen-side castle: ['q']
-// King-side castle: ['k']
-// Check: ['c']
-// Mate: ['m']
-// Definitely Illegal: NULL
-// All legal returns (except standard) must have further checks for legality, as they all have historical state dependancies
-// All legal returns must be freed by caller
-char* notationToMove (board_t board, const char * move, bool whiteMove) {
-    if(board == NULL || move == NULL)
-        return NULL;
-        
-    if(strlen(move) < 1)
-		return NULL;
-    
-    char* toReturn = malloc(1 * sizeof(char));
-    if(toReturn == NULL) 
-		return NULL;
-		
-    //==========================<Odd Parsing>=========================//
-    if(move[0] == '+') {
-		toReturn[0] = 'c';
-		return toReturn;
-	}
-	
-	if(move[0] == '#') {
-		toReturn[0] = 'm';
-		return toReturn;
-	}
-	
-	if(strcmp("0-0", move) == 0) {
-		//Check if king's castle is clear and (possibly) set
-		toReturn[0] = 'k';
-		return toReturn;
-	}
-	
-	if(strcmp("0-0-0", move) == 0) {
-		//Check if queen's castle is clear and (possibly) set
-		toReturn[0] = 'q';
-		return toReturn;
-	}
-	
-	
-	
-    //==========================<Move Parsing>==========================//
-    if(!isPiece(toReturn[0])) {
-		return parsePawn(board, move, whiteMove);
-	} 
-	
-	switch(toReturn[0]) {
-	case kRookFlag:
-		return parseRook(board, move, whiteMove);
-	case kKnightFlag:
-		return parseKnight(board, move, whiteMove);
-	case kBishopFlag:
-		return parseBishop(board, move, whiteMove);
-	case kQueenFlag:
-		return parseQueen(board, move, whiteMove);
-	case kKingFlag:
-		return parseKing(board, move, whiteMove);
-		
-	default:
-		return NULL;
-	}
-    
-    //MUST IMPLEMENT CHECKS FOR POSSIBILITY OF CHECK, MATE, EN PASSENT, 
-    //AND CASTLING, AS WELL AS IF INITIAL STATE ALLOWS THEM IN THEORY. 
-    //PIECE CHECKS DO NOT COVER THESE, AND WILL ONLY CHECK FOR STANDARD 
-    //MOVEMENTS/CAPTURES 
+	return toReturn;
 }

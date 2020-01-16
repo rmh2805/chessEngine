@@ -17,6 +17,7 @@ void deleteBoard (board_t board);
 board_t makeBoard ();
 
 bool pieceWhite(board_t board, int rank, char file);
+bool pieceBlack(board_t board, int rank, char file);
 bool cellEmpty(board_t board, int rank, char file);
 char pieceType (board_t board, int rank, char file);
 

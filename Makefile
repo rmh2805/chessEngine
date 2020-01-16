@@ -70,9 +70,11 @@ chessGame.o: chessGame.c chessGame.h
 #	Utils
 # 
 clean:
-	rm *.o
+	rm *.o > /dev/null
 
 cleanExe:
-	rm $(EXECUTABLES)
+	rm $(EXECUTABLES) > /dev/null
 
-realclean: clean cleanExe
+realclean: 
+	-@make clean
+	-@make cleanExe 

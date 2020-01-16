@@ -19,6 +19,7 @@ extern const char kPieceTypes[];
 extern const int kNumPieceTypes;
 
 bool isPiece (char piece);
+bool colorMatch (board_t board, int rank, char file, bool isWhite);
 
 bool canMove (board_t board, int srcRank, char srcFile, int destRank, char destFile);
 

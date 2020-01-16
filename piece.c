@@ -12,6 +12,13 @@ bool isPiece (char piece) {
     return false;
 }
 
+bool colorMatch (board_t board, int rank, char file, bool isWhite) {
+    if(board == NULL)
+        return false;
+    
+    return (isWhite && pieceWhite(board, rank, file)) || (!isWhite && pieceBlack(board, rank, file));
+}
+
 bool cardinalMove (board_t board, bool isWhite, int deltaRank, int deltaFile, int srcRank, char srcFile, int destRank, char destFile) {
     if(srcRank == destRank && srcFile == destFile)
         return cellEmpty(board, srcRank, srcFile) || (isWhite != pieceWhite(board, srcRank, srcFile));
