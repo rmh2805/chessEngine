@@ -58,7 +58,7 @@ bool pawnMove (board_t board, int srcRank, char srcFile, int destRank, char dest
     //First check if this is the pawn's initial deployment, if so allow an advance of 2, else disallow
     return ((isWhite && srcRank == 2)||(!isWhite && srcRank == 7)) && abs(srcRank - destRank) == 2;
 }
-
+ 
 bool rookMove (board_t board, int srcRank, char srcFile, int destRank, char destFile) {
     if((srcRank == destRank && srcFile == destFile) ||
        (srcRank != destRank && srcFile != destFile))
