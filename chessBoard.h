@@ -21,6 +21,9 @@ bool pieceBlack(board_t board, int rank, char file);
 bool cellEmpty(board_t board, int rank, char file);
 char pieceType (board_t board, int rank, char file);
 
+bool isRank(int rank);
+bool isFile(char file);
+
 void setPiece(board_t board, bool isWhite, char type, int rank, char file);
 void clearCell(board_t board, int rank, char file);
 void movePiece(board_t board, int srcRank, char srcFile, int destRank, char destFile);

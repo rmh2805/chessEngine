@@ -7,15 +7,54 @@ const char checkFlag = 'c';
 const char mateFlag = 'm';
 
 char* parsePawn (board_t board, const char* move, bool whiteMove) {
+	char flag, srcRank, srcFile, destRank, destFile;
+	int direction = (whiteMove)? 1 : -1;
+
 	if(strlen(move) == 2) {
 		//This is a simple move, no disambiguation ever needed. Format is just 'destFile''destRank'
-	}
-	
-	if(strlen(move) >= 4) {
+
+		destRank = move[1] - '0';
+		srcFile = move[0];
+		destFile = srcFile;
+		srcRank = destRank - direction; //Check one square back first
+
+		flag = standardMoveFlag;
+		if(!canMove(board, srcRank, srcFile, destRank, destFile)) {
+			srcRank -= direction;
+			if(!canMove(board, srcRank, srcFile, destRank, destFile)) {
+				return NULL;
+			}
+		}
+	} else if(strlen(move) >= 4) {
 		//This is a pawn capture, possibly with en passent (CHECK). 'srcFile''x''destFile''destRank'
+		if(move[1] != 'x')
+			return NULL;
+ 
+		srcFile = move[0];
+		destFile = move[2];
+		destRank = move[3] - '0';
+		
+		srcRank = destRank - direction;
+		
+		if(canMove(board, srcRank, srcFile, destRank, destFile)) {
+			flag = standardMoveFlag;
+		} else {
+			//Potentially en passent
+			return NULL;
+		}
+
+		
+	} else {
+		return NULL;
 	}
 	
-	return NULL;
+	char* toReturn = calloc(5, sizeof(char));
+	toReturn[0] = flag;
+	toReturn[1] = srcRank;
+	toReturn[2] = srcFile;
+	toReturn[3] = destRank;
+	toReturn[4] = destFile;
+	return toReturn;
 }
 
 char* parseKing (board_t board, const char* move, bool whiteMove) {
@@ -107,7 +146,7 @@ char* notationToMove (board_t board, const char * move, bool whiteMove) {
 	
     //======================<Check For Odd Pieces>====================//
     char pieceType = move[0];
-    if(!pieceType) {
+    if(!isPiece(pieceType)) {
         free(toReturn);
 		return parsePawn(board, move, whiteMove);
 	} 

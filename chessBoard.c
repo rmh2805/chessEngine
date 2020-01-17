@@ -51,36 +51,43 @@ board_t makeBoard () {
 }
 
 bool pieceWhite(board_t board, int rank, char file) {
-    if(board == NULL)
+    if(board == NULL || !isRank(rank) || !isFile(file))
         return false;
     
     return board->data[rank - 1][(file - 'a') * 2] == kWhiteFlag;
 }
 
 bool pieceBlack(board_t board, int rank, char file) {
-    
-    if(board == NULL)
+    if(board == NULL || !isRank(rank) || !isFile(file))
         return false;
     
     return board->data[rank - 1][(file - 'a') * 2] == kBlackFlag;
 }
 
 bool cellEmpty(board_t board, int rank, char file) {
-    if(board == NULL)
+    if(board == NULL || !isRank(rank) || !isFile(file))
         return true;
     
     return board->data[rank - 1][(file - 'a') * 2] == ' ';
 }
     
 char pieceType (board_t board, int rank, char file) {
-    if(board == NULL)
+    if(board == NULL || !isRank(rank) || !isFile(file))
         return ' ';
         
     return board->data[rank - 1][(file - 'a') * 2 + 1];
 }
 
+bool isRank(int rank) {
+    return rank >= 1 && rank < 1 + kNumRanks;
+}
+
+bool isFile(char file) {
+    return file >= 'a' && file < 'a' + kNumFiles;
+}
+
 void setPiece(board_t board, bool isWhite, char type, int rank, char file) {
-    if(board == NULL || type == ' ')
+    if(board == NULL || type == ' ' || type == '\0' || !isRank(rank) || !isFile(file))
         return;
     
     char color = kBlackFlag;
@@ -92,7 +99,7 @@ void setPiece(board_t board, bool isWhite, char type, int rank, char file) {
 }
 
 void clearCell(board_t board, int rank, char file) {
-    if(board == NULL)
+    if(board == NULL || !isRank(rank) || !isFile(file))
         return;
         
     board->data[rank - 1][(file - 'a') * 2] = ' ';
@@ -100,7 +107,7 @@ void clearCell(board_t board, int rank, char file) {
 }
 
 void movePiece(board_t board, int srcRank, char srcFile, int destRank, char destFile) {
-    if(board == NULL)
+    if(board == NULL || !isRank(srcRank) || !isFile(srcFile) || !isRank(destRank) || !isFile(destFile))
         return;
     
     char color = board->data[srcRank - 1][(srcFile - 'a') * 2];

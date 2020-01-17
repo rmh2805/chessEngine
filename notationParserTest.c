@@ -85,6 +85,15 @@ void testNotationParse(board_t board, const char* notation, bool isWhite) {
     printf("\n");
 }
 
+void tryDispNotationParse(board_t board, const char* message) {
+    if(!startDisp()) {
+        drawBoard(board);
+        drawTurn(message);
+        getch();
+        stopDisp();
+    }
+}
+
 //======================<Multiple Tests>==============================//
 int testMoveChecks() {
     board_t board = makeBoard();
@@ -130,8 +139,7 @@ int testMoveChecks() {
 
 void testCastlingParse() {
     board_t board = makeBoard();
-    
-    //======================<Castling Test>===========================//
+
     //======================<Success>======================//
     setPiece(board, false, kRookFlag, 8, 'a');
     setPiece(board, false, kRookFlag, 8, 'h');
@@ -140,44 +148,71 @@ void testCastlingParse() {
     setPiece(board, true, kRookFlag, 1, 'a');
     setPiece(board, true, kRookFlag, 1, 'h');
     setPiece(board, true, kKingFlag, 1, 'e');
-    
-    
-    startDisp();
-    drawBoard(board);
-    drawTurn("Board setup for castling success");
-    getch();
-    stopDisp();
+
+    tryDispNotationParse(board, "Successful Castle Test Setup");
     
     printf("\n======================<Castle Success Tests>======================\n");
     testNotationParse(board, kCastle, true);
     testNotationParse(board, kCastle, false);
     testNotationParse(board, qCastle, true);
     testNotationParse(board, qCastle, false);
+    fgetc(stdin);
     
     //======================<Failure>======================//
     setPiece(board, false, kKnightFlag, 8, 'b');
     setPiece(board, true, kKnightFlag, 1, 'g');
     
-    startDisp();
-    drawBoard(board);
-    drawTurn("Board setup for castling success");
-    getch();
-    stopDisp();
+    tryDispNotationParse(board, "Unsuccessful Castle Test Setup");
     
     printf("\n======================<Castle Failure Tests>======================\n");
     testNotationParse(board, kCastle, true);
     testNotationParse(board, kCastle, false);
     testNotationParse(board, qCastle, true);
     testNotationParse(board, qCastle, false);
+    fgetc(stdin);
     
-    //======================<Testing Misc>============================//
+    deleteBoard(board);
+}
+
+void testMiscParse() {
+    board_t board = makeBoard();
+    if(board == NULL)
+        return;
+
     printf("\n======================<Misc Tests>================================\n");
     testNotationParse(board, check, true);
     testNotationParse(board, mate, true);
-    
-    
-    
+
     deleteBoard(board);
+}
+
+void testPawnParse() {
+    board_t board = makeBoard();
+    if(board == NULL)
+        return;
+
+    startBoard(board);
+    tryDispNotationParse(board, "Initial Pawn Setup");
+
+    printf("\n======================<Pawn move Tests>================================\n");
+    testNotationParse(board, "a1", true);
+    testNotationParse(board, "b2", true);
+    printf("White Single Advance: ");
+    testNotationParse(board, "c3", true);
+    printf("White Double Advance: ");
+    testNotationParse(board, "d4", true);
+    testNotationParse(board, "e5", true);
+
+    
+    testNotationParse(board, "a8", false);
+    testNotationParse(board, "b7", false);
+    printf("Black Double advance: ");
+    testNotationParse(board, "c6", false);
+    printf("Black Single advance: ");
+    testNotationParse(board, "d5", false);
+    testNotationParse(board, "e4", false);
+
+    printf("\n======================<Pawn Capture Tests>=============================\n");
 }
 
 //======================<Main Function>===============================//
@@ -203,7 +238,9 @@ int main (int argc, char**argv) {
     }
     
     //======================<Preprogrammed Test>======================//
-    testCastlingParse();
+    testPawnParse();
+    //testCastlingParse();
+    //testMiscParse();
     
     return EXIT_SUCCESS; 
 }
