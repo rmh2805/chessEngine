@@ -26,16 +26,17 @@ char* parseKing (board_t board, const char* move, bool whiteMove) {
 	return NULL;
 }
 
-
-// Standard: ['n', Source Rank, Source File, Dest Rank, Dest File]
-// En passent: ['e', Source Rank, Source File, Dest Rank, Dest File]
-// Queen-side castle: ['q']
-// King-side castle: ['k']
-// Check: ['c']
-// Mate: ['m']
-// Definitely Illegal: NULL
-// All legal returns (except standard) must have further checks for legality, as they all have historical state dependancies
-// All legal returns must be freed by caller
+/**
+ * Standard: ['n', Source Rank, Source File, Dest Rank, Dest File]
+ * En passent: ['e', Source Rank, Source File, Dest Rank, Dest File]
+ * Queen-side castle: ['q']
+ * King-side castle: ['k']
+ * Check: ['c']
+ * Mate: ['m']
+ * Definitely Illegal: NULL
+ * All legal returns (except standard) must have further checks for legality, as they all have historical state dependancies
+ * All legal returns must be freed by caller
+ */
 char* notationToMove (board_t board, const char * move, bool whiteMove) {
     if(board == NULL || move == NULL)
         return NULL;
@@ -47,7 +48,7 @@ char* notationToMove (board_t board, const char * move, bool whiteMove) {
     if(toReturn == NULL) 
 		return NULL;
 		
-    //==========================<Odd Parsing>=========================//
+    //======================<Odd Parsing>=============================//
     if(move[0] == '+') {
 		toReturn[0] = checkFlag;
 		return toReturn;
@@ -104,19 +105,19 @@ char* notationToMove (board_t board, const char * move, bool whiteMove) {
     }
 	
 	
-    //=========================<Check For Odd Pieces>=========================//
-    if(!isPiece(toReturn[0])) {
+    //======================<Check For Odd Pieces>====================//
+    char pieceType = move[0];
+    if(!pieceType) {
         free(toReturn);
 		return parsePawn(board, move, whiteMove);
 	} 
     
-    char pieceType = toReturn[0];
     if(pieceType == kKingFlag) {
         free(toReturn);
         return parseKing(board, move, whiteMove);
     }
 	
-    //=========================<Check Standard Piece>=========================//
+    //======================<Check Standard Piece>====================//
 	char moveLen = strlen(move);
 	if(moveLen < 3)
 		return NULL;

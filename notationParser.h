@@ -18,6 +18,17 @@ extern const char kingCastleFlag;
 extern const char checkFlag;
 extern const char mateFlag;
 
+/*
+ *  Standard: ['n', Source Rank, Source File, Dest Rank, Dest File]
+ *  En passent: ['e', Source Rank, Source File, Dest Rank, Dest File]
+ *  Queen-side castle: ['q']
+ *  King-side castle: ['k']
+ *  Check: ['c']
+ *  Mate: ['m']
+ *  Definitely Illegal: NULL
+ *  All legal returns (except standard) must have further checks for legality, as they all have historical state dependancies
+ *  All legal returns must be freed by caller
+ */
 char* notationToMove (board_t board, const char * move, bool whiteMove);
 
 
