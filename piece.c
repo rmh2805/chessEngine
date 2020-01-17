@@ -52,7 +52,7 @@ bool pawnMove (board_t board, int srcRank, char srcFile, int destRank, char dest
     } else if(abs(srcFile - destFile) != 0) {
         return false; //Pawns can only change file on capture
     } else if(abs(srcRank - destRank) == 1) {
-        return true;    //Moved the right direction, stayed in its file, only moved 1 is always legal
+        return cellEmpty(board, destRank, destFile);    //Check if dest Empty
     }
     
     //First check if this is the pawn's initial deployment, if so allow an advance of 2, else disallow

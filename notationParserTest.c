@@ -195,24 +195,90 @@ void testPawnParse() {
     tryDispNotationParse(board, "Initial Pawn Setup");
 
     printf("\n======================<Pawn move Tests>================================\n");
-    testNotationParse(board, "a1", true);
-    testNotationParse(board, "b2", true);
-    printf("White Single Advance: ");
-    testNotationParse(board, "c3", true);
-    printf("White Double Advance: ");
-    testNotationParse(board, "d4", true);
-    testNotationParse(board, "e5", true);
 
-    
-    testNotationParse(board, "a8", false);
-    testNotationParse(board, "b7", false);
+    printf("Successes:\n");
     printf("Black Double advance: ");
     testNotationParse(board, "c6", false);
     printf("Black Single advance: ");
     testNotationParse(board, "d5", false);
-    testNotationParse(board, "e4", false);
+    printf("White Single Advance: ");
+    testNotationParse(board, "c3", true);
+    printf("White Double Advance: ");
+    testNotationParse(board, "d4", true);
 
-    printf("\n======================<Pawn Capture Tests>=============================\n");
+    printf("Failures: \n");
+    testNotationParse(board, "a8", false);
+    testNotationParse(board, "b7", false);
+    testNotationParse(board, "e4", false);
+    testNotationParse(board, "a1", true);
+    testNotationParse(board, "b2", true);
+    testNotationParse(board, "e5", true);
+
+    getch();
+
+
+    setPiece(board, true, kPawnFlag, 5, 'a');
+    setPiece(board, true, kPawnFlag, 4, 'b');
+    setPiece(board, true, kPawnFlag, 5, 'c');
+    setPiece(board, true, kPawnFlag, 6, 'g');
+    setPiece(board, true, kPawnFlag, 4, 'e');
+
+    
+    setPiece(board, false, kPawnFlag, 4, 'a');
+    setPiece(board, false, kPawnFlag, 5, 'b');
+    setPiece(board, false, kPawnFlag, 4, 'c');
+    setPiece(board, false, kPawnFlag, 3, 'g');
+    setPiece(board, false, kPawnFlag, 5, 'f');
+
+    
+    tryDispNotationParse(board, "Secondary Testing Setup");
+
+    
+    printf("\n======================<En Passent Tests>===============================\n");
+    printf("Success:\n");
+    testNotationParse(board, "axb3", false);
+    testNotationParse(board, "cxb3", false);
+    testNotationParse(board, "axb6", true);
+    testNotationParse(board, "cxb6", true);
+    
+    printf("\nFailure:\n");
+    testNotationParse(board, "cxd6", true);
+    testNotationParse(board, "cxb3", true);
+    
+    printf("\n======================<Capture Tests>==================================\n");
+    printf("Success:\n");
+    testNotationParse(board, "fxg3", true);
+    testNotationParse(board, "hxg3", true);
+    testNotationParse(board, "gxf7", true);
+    testNotationParse(board, "gxh7", true);
+
+    testNotationParse(board, "fxg6", false);
+    testNotationParse(board, "hxg6", false);
+    testNotationParse(board, "gxf2", false);
+    testNotationParse(board, "gxh2", false);
+    
+    printf("\nFailure:\n");
+    testNotationParse(board, "exg3", true);
+    testNotationParse(board, "exf3", true);
+    testNotationParse(board, "exg6", false);
+    testNotationParse(board, "exf6", false);
+
+    printf("\n======================<Misc Pawn Move Tests>===========================\n");
+    printf("Block Move Fail Tests:\n");
+    testNotationParse(board, "b5", true);
+    testNotationParse(board, "b4", false);
+    
+    
+    printf("\nDouble Advance Fail Tests:\n");
+    testNotationParse(board, "e6", true);
+    testNotationParse(board, "f3", false);
+
+    printf("\nRetreat Fail Tests:\n");
+    testNotationParse(board, "g5", true);
+    testNotationParse(board, "g4", false);
+        
+
+    deleteBoard(board);
 }
 
 //======================<Main Function>===============================//
