@@ -38,7 +38,8 @@ all:
 #
 #	Object Files
 #
-
+%.o: %.c
+	$(CC) $(CFLAGS) $(CDEBUGFLAGS) -c -o $@ $^
 
 #
 #	Utils
