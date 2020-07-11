@@ -16,13 +16,10 @@ ECHO=@echo
 CLIBS=-lm -lncurses
 CFLAGS=-Wall -std=c99 -Wextra -pedantic -ggdb
 
-# Misc
-EXECUTABLES=dispTest notationParserTest
-
 #
 #	Main Target
 #
-main: notationParserTest
+main: 
 
 #
 #	Multiple Targets
