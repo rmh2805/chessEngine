@@ -11,14 +11,14 @@ board_t makeBoard() {
         return;
     }
     
-    board->data = calloc(kBoardRanks, sizeof(char*));
+    board->data = calloc(kBoardRows, sizeof(char*));
     if(board->data == NULL) {
         delBoard(board);
         return;
     }
 
-    for(int i = 0; i < kBoardRanks; i++) {
-        board->data[i] = calloc(kBoardFiles, sizeof(char));
+    for(int i = 0; i < kBoardRows; i++) {
+        board->data[i] = calloc(kBoardCols, sizeof(char));
         if(board->data[i] == NULL) {
             delBoard(board);
             return;
@@ -35,7 +35,7 @@ void delBoard(board_t board) {
     }
 
     if(board->data != NULL) {
-        for(int i = 0; i < kBoardRanks; i++) {
+        for(int i = 0; i < kBoardRows; i++) {
             if(board->data[i] != NULL) {
                 free(board->data[i]);
             }
@@ -47,18 +47,48 @@ void delBoard(board_t board) {
 }
 
 //=====================================<Getters and Setters>======================================//
-char getCell(board_t board, unsigned int rank, unsigned int file) {
-    if(board == NULL) {
+char getCell(board_t board, unsigned int row, unsigned int col) {
+    if(board == NULL || row >= kBoardRows || col >= kBoardCols) {
         return '\0';
     }
 
-    return board->data[rank][file];
+    return board->data[row][col];
 }
 
-void setCell(board_t board, unsigned int rank, unsigned int file, char piece) {
-    if(board == NULL) {
+void setCell(board_t board, unsigned int row, unsigned int col, char piece) {
+    if(board == NULL || row >= kBoardRows || col >= kBoardCols) {
         return;
     }
 
-    board->data[rank][file] = piece;
+    board->data[row][col] = piece;
 }
+
+//===========================================<Helpers>============================================//
+unsigned int rowFromFile(char file) {
+    if(file < '0') {
+        return 0;
+    }
+
+    unsigned int row = file - '0';
+    if(row > kBoardRows) {
+        return 0;
+    }
+
+    return row;
+
+}
+
+unsigned int colFromRank(char rank) {
+    if(rank >= 'a' && rank <= 'a' + kBoardCols) {
+        rank = rank - 'a' + 'A';
+    }
+
+    if(rank < 'A' || rank > 'A' + kBoardCols) {
+        return 0;
+    }
+    
+    unsigned int col = rank - 'A';
+    return col;
+
+}
+
