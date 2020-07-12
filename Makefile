@@ -19,18 +19,19 @@ CFLAGS=-Wall -std=c99 -Wextra -pedantic -ggdb
 #
 #	Main Target
 #
-main: 
+main: testBoard
 
 #
 #	Multiple Targets
 #
-
-all: 
+all: testBoard
 
 #
 #	Executables
 #
-
+testBoard: testBoard.o board.o
+	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
+	$(ECHO)
 
 #
 #	Object Files
@@ -45,4 +46,5 @@ clean:
 	rm *.o > /dev/null
 
 realclean: clean
+	-rm testBoard
 	

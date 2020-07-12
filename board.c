@@ -8,20 +8,20 @@ struct board_s {
 board_t makeBoard() {
     board_t board = malloc(sizeof(struct board_s));
     if(board == NULL) {
-        return;
+        return NULL;
     }
     
     board->data = calloc(kBoardRows, sizeof(char*));
     if(board->data == NULL) {
         delBoard(board);
-        return;
+        return NULL;
     }
 
     for(int i = 0; i < kBoardRows; i++) {
         board->data[i] = calloc(kBoardCols, sizeof(char));
         if(board->data[i] == NULL) {
             delBoard(board);
-            return;
+            return NULL;
         }
     }
 
