@@ -2,6 +2,9 @@
 #define  _BOARD_H_
 
 #include <stdlib.h>
+#include <stdbool.h>
+
+#include "chessConst.h"
 
 #define kBoardCols 8
 #define kBoardRows 8
@@ -13,11 +16,18 @@ board_t makeBoard();
 void delBoard(board_t board);
 
 //=====================================<Getters and Setters>======================================//
-char getCell(board_t board, unsigned int row, unsigned int col);
-void setCell(board_t board, unsigned int row, unsigned int col, char piece);
+size_t getNRows(board_t board);
+
+size_t getNCols(board_t board);
+
+char getCell(board_t board, size_t row, size_t col);
+
+void clearCell(board_t board, size_t row, size_t col);
+
+void setCell(board_t board, size_t row, size_t col, char piece, bool isWhite);
 
 //===========================================<Helpers>============================================//
-unsigned int rowFromFile(char file);
-unsigned int colFromRank(char rank);
+size_t rowFromFile(char file);
+size_t colFromRank(char rank);
 
 #endif //_BOARD_H_

@@ -1,6 +1,8 @@
 #include "board.h"
 
 struct board_s {
+    size_t nRows;
+    size_t nCols;
     char** data;
 };
 
@@ -24,6 +26,9 @@ board_t makeBoard() {
             return NULL;
         }
     }
+    
+    board->nRows = kBoardRows;
+    board->nCols = kBoardCols;
 
     return board;
 }
@@ -35,7 +40,7 @@ void delBoard(board_t board) {
     }
 
     if(board->data != NULL) {
-        for(int i = 0; i < kBoardRows; i++) {
+        for(size_t i = 0; i < board->nRows; i++) {
             if(board->data[i] != NULL) {
                 free(board->data[i]);
             }
@@ -47,29 +52,49 @@ void delBoard(board_t board) {
 }
 
 //=====================================<Getters and Setters>======================================//
-char getCell(board_t board, unsigned int row, unsigned int col) {
-    if(board == NULL || row >= kBoardRows || col >= kBoardCols) {
+size_t getNRows(board_t board) {
+    return (board == NULL) ? 0 : board->nRows;
+}
+
+size_t getNCols(board_t board) {
+    return (board == NULL) ? 0 : board->nCols;
+}
+
+char getCell(board_t board, size_t row, size_t col) {
+    if(board == NULL || row >= board->nRows || col >= board->nCols) {
         return '\0';
     }
 
     return board->data[row][col];
 }
 
-void setCell(board_t board, unsigned int row, unsigned int col, char piece) {
-    if(board == NULL || row >= kBoardRows || col >= kBoardCols) {
+void clearCell(board_t board, size_t row, size_t col) {
+    if(board == NULL || row >= board->nRows || col >= board->nCols) {
         return;
     }
 
-    board->data[row][col] = piece;
+    board->data[row][col] = kEmptyCell;
+}
+
+void setCell(board_t board, size_t row, size_t col, char val, bool isWhite) {
+    if(board == NULL || row >= board->nRows || col >= board->nCols) {
+        return;
+    }
+
+    val = val & kColorMask;
+    if(isWhite)
+        val = val | kWhiteFlag;
+
+    board->data[row][col] = val;
 }
 
 //===========================================<Helpers>============================================//
-unsigned int rowFromFile(char file) {
+size_t rowFromFile(char file) {
     if(file < '0') {
         return 0;
     }
 
-    unsigned int row = file - '0';
+    size_t row = file - '0';
     if(row > kBoardRows) {
         return 0;
     }
@@ -78,7 +103,7 @@ unsigned int rowFromFile(char file) {
 
 }
 
-unsigned int colFromRank(char rank) {
+size_t colFromRank(char rank) {
     if(rank >= 'a' && rank <= 'a' + kBoardCols) {
         rank = rank - 'a' + 'A';
     }
@@ -87,7 +112,7 @@ unsigned int colFromRank(char rank) {
         return 0;
     }
     
-    unsigned int col = rank - 'A';
+    size_t col = rank - 'A';
     return col;
 
 }
