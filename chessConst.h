@@ -16,7 +16,7 @@
 #define kKnightVal 0x03
 
 #define kBishopChar 'B'
-#define kBishipVal 0x04
+#define kBishopVal 0x04
 
 #define kQueenChar 'Q'
 #define kQueenVal 0x05
