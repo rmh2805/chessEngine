@@ -17,7 +17,9 @@ int main() {
     
     dispFunc.DispHelp = printHelpPrompt;
     dispFunc.DispBoard = printBoard;
-    
+    dispFunc.DispMsg = printMsg;
+    dispFunc.DispScore = printScore;
+
     dispFunc.GetStr = printGetStr;
     
     //Allocate the board and initialize the display
@@ -34,7 +36,9 @@ int main() {
 
     //Perform tests on the display functions
     
-    dispFunc.DispHelp("foo bar baz");
+    dispFunc.DispHelp("Help display test...");
+
+    
 
     //cleanup
     dispFunc.CloseDisp(); //shut down the display

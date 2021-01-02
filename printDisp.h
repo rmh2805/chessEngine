@@ -11,7 +11,7 @@
 int printInit(board_t board);
 void printStop();
 
-void printHelpPrompt(board_t board);
+void printHelpPrompt(const char * msg);
 void printBoard(board_t board);
 void printMsg(const char * msg);
 void printScore(const char * score);
