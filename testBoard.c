@@ -4,6 +4,7 @@
 #include "chessConst.h"
 #include "printDisp.h"
 #include "board.h"
+#include "chess.h"
 
 int main() {
     board_t board = makeBoard();
@@ -17,8 +18,7 @@ int main() {
         return EXIT_FAILURE;
     }
     
-    setCell(board, 0, 0, kBishopVal, true);
-    setCell(board, 0, 1, kKnightVal, false);
+    setBoard(board);
     
     printBoard(board);
 

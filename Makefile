@@ -29,7 +29,7 @@ all: testBoard
 #
 #	Executables
 #
-testBoard: testBoard.o board.o printDisp.o
+testBoard: testBoard.o board.o printDisp.o chess.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 	$(ECHO)
 
