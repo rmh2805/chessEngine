@@ -6,7 +6,8 @@
 #define kWhiteChar 'W'
 #define kBlackChar 'B'
 
-int printInit() {
+//========================================<Init and Close>=========================================//
+int printInit(board_t board) {
     return EXIT_SUCCESS;
 }
 
@@ -14,10 +15,16 @@ void printStop() {
     printf("Stopping Print Display\n");
 }
 
+
+//============================================<Display>============================================//
+void printHelpPrompt(const char* helpMsg) {
+    printf("%s\n\nPress enter to continue", helpMsg);
+    fgetc(stdin);
+}
+
+//Declare print board helpers before use
 void printColumnLabels(board_t board);
-
 void printBoardRow(board_t board, size_t row);
-
 void printHorizontalBorder(board_t board);
 
 void printBoard(board_t board) {
@@ -39,15 +46,21 @@ void printBoard(board_t board) {
     printColumnLabels(board);
 }
 
+void printMsg(const char * msg) {
+    printf("%s\n", msg);
+}
+
+void printScore(const char * score) {
+    printf("%s\n", score);
+}
+
+//=============================================<Input>=============================================//
 void printGetStr(char * buf, size_t bufSize) {
     printf("Enter your command: ");
     fgets(buf, bufSize, stdin);
 }
 
-void printHelpPrompt() {
-    printf("This is the help display, it does bupkis for now... ass\n");
-}
-
+//============================================<Helpers>============================================//
 void printHorizontalBorder(board_t board) {
     if(board == NULL)
         return;
@@ -147,10 +160,4 @@ void printColumnLabels(board_t board) {
     }
     printf("\n");
 
-}
-
-void lIndent(size_t size) {
-    for(size_t i = 0; i < size; i++) {
-        printf(" ");
-    }
 }

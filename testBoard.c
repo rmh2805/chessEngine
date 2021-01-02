@@ -15,7 +15,7 @@ int main() {
         return EXIT_FAILURE;
     }
     
-    if(printInit() != EXIT_SUCCESS) {
+    if(printInit(board) != EXIT_SUCCESS) {
         printf("Failed to initialize the display, exit failure\n");
         return EXIT_FAILURE;
     }
