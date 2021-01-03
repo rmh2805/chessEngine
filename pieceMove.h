@@ -15,5 +15,6 @@ void delGameStats(gameStats_t stats);
 bool moveLegal(gameStats_t stats, board_t board, size_t startRow, size_t startCol, size_t endRow, size_t endCol);
 bool makeMove(gameStats_t stats, board_t board, size_t startRow, size_t startCol, size_t endRow, size_t endCol);
 
+bool isWhiteTurn(gameStats_t stats);
 
 #endif //_PIECE_MOVE_H_
