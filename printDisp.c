@@ -102,30 +102,9 @@ void printBoardRow(board_t board, size_t row) {
                     printf("%c", (cell == kEmptyCell) ? spaceChar : ((isWhite) ? kWhiteChar : kBlackChar));
                     cellCol += 1;
                     
-                    
-                    switch(cell) {
-                        case kPawnVal:
-                            cell = kPawnChar;
-                            break;
-                        case kRookVal:
-                            cell = kRookChar;
-                            break;
-                        case kKnightVal:
-                            cell = kKnightChar;
-                            break;
-                        case kBishopVal:
-                            cell = kBishopChar;
-                            break;
-                        case kQueenVal:
-                            cell = kQueenChar;
-                            break;
-                        case kKingVal:
-                            cell = kKingChar;
-                            break;
-                        default:
-                            cell = spaceChar;
-                    }
-                    printf("%c", cell);
+                    cell = pieceDispFromVal(cell);
+            
+                    printf("%c", (cell == kEmptyCell) ? spaceChar : cell);
                     
                 } else {
                     printf("%c", spaceChar);

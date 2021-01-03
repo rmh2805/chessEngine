@@ -7,6 +7,7 @@
 
 #include "board.h"
 #include "chessConst.h"
+#include "chess.h"
 
 int printInit(board_t board);
 void printStop();
