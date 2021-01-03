@@ -6,6 +6,22 @@
 #define kWhiteChar 'W'
 #define kBlackChar 'B'
 
+DispFunc getPrintDisp() {
+    DispFunc dispFunc;
+    
+    dispFunc.InitDisp = printInit;
+    dispFunc.CloseDisp = printStop;
+
+    dispFunc.DispHelp = printHelpPrompt;
+    dispFunc.DispBoard = printBoard;
+    dispFunc.DispMsg = printMsg;
+    dispFunc.DispScore = printScore;
+
+    dispFunc.GetStr = printGetStr;
+
+    return dispFunc;
+} 
+
 //========================================<Init and Close>=========================================//
 int printInit(board_t board) {
     return EXIT_SUCCESS;

@@ -8,6 +8,9 @@
 #include "chess.h"
 #include "chessConst.h"
 #include "board.h"
+#include "dispFunc.h"
+
+DispFunc getCursesDisp(); 
 
 int cursesInit(board_t board);
 void cursesClose();

@@ -24,6 +24,23 @@ size_t getCellCol(size_t cellCol, size_t nCols);
 #define kBlackPalette 2
 
 //========================================<Init and Close>=========================================//
+
+DispFunc getCursesDisp() {
+    DispFunc dispFunc;
+
+    dispFunc.InitDisp = cursesInit;
+    dispFunc.CloseDisp = cursesClose;
+
+    dispFunc.DispHelp = cursesDispHelp;
+    dispFunc.DispBoard = cursesDispBoard;
+    dispFunc.DispMsg = cursesDispMsg;
+    dispFunc.DispScore = cursesDispScore;
+
+    dispFunc.GetStr = cursesGetStr;
+
+    return dispFunc;
+}
+
 int cursesInit(board_t board) {
     if(board == NULL) return EXIT_FAILURE; //Must have a board to initialize (to check for size)
 

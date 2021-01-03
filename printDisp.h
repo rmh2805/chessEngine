@@ -8,6 +8,9 @@
 #include "board.h"
 #include "chessConst.h"
 #include "chess.h"
+#include "dispFunc.h"
+
+DispFunc getPrintDisp();
 
 int printInit(board_t board);
 void printStop();
