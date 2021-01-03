@@ -11,15 +11,15 @@
 #include "cursesDisp.h"
 #include "printDisp.h"
 
-#define kPrintArg "-p"
+#define kCursesArg "-c"
 
 int main(int argc, char** argv) {
     //Parse arguments
-    DispFunc dispFunc = getCursesDisp();
+    DispFunc dispFunc = getPrintDisp();
 
     for(int i = 1; i < argc; i++) {
-        if(strncmp(kPrintArg, argv[i], strlen(kPrintArg)) == 0) {
-            dispFunc = getPrintDisp();
+        if(strncmp(kCursesArg, argv[i], strlen(kCursesArg)) == 0) {
+            dispFunc = getCursesDisp();
         }
     }
 
