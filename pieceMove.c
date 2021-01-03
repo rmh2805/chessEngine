@@ -14,14 +14,39 @@ struct gameStats_s {
 };
 
 gameStats_t makeGameStats() {
-    return NULL;
+    gameStats_t stats = malloc(sizeof(struct gameStats_s));
+
+    stats->whiteEnPasseCol = 255;
+    stats->blackEnPasseCol = 255;
+
+    stats->isWhiteTurn = true;
+    
+    stats->wCastleK = true;
+    stats->wCastleQ = true;
+
+    stats->bCastleK = true;
+    stats->bCastleQ = true;
+
+    return stats;
 }
 
 void delGameStats(gameStats_t stats) {
-
+    free(stats);
 }
 
+#include <stdio.h>
 bool moveLegal(gameStats_t stats, board_t board, size_t startRow, size_t startCol, size_t endRow, size_t endCol) {
+    if(board == NULL || stats == NULL) {
+        return false;
+    }
+    
+    printf("White en passe col: %lu\n", stats->whiteEnPasseCol);
+    printf("Black en passe col: %lu\n", stats->blackEnPasseCol);
+    
+    printf("%s\n", (stats->isWhiteTurn) ? "white's turn" : "black's turn");
+    printf("%s\n", (stats->wCastleK) ? "white can king castle" : "white can't king castle");
+    
+
     return false;
 }
 
