@@ -68,6 +68,7 @@ int cursesInit(board_t board) {
     scoreRow = getCellRow(0, boardRows) - 5;
     msgRow = scoreRow + 1;
     promptRow = getCellRow(8, boardRows) + 3;
+    
     //Clear the screen and exit success
     refresh();
     return EXIT_SUCCESS;
@@ -95,6 +96,43 @@ void cursesDispBoard(board_t board) {
 
     drawBaseBoard(boardRows, boardCols);
     drawBoardIndicators(boardRows, boardCols);
+    
+    for(size_t boardRow = 0; boardRow < boardRows; boardRow++) {
+        size_t screenRow = getCellRow(boardRows - 1 - boardRow, boardRows) + kCellHeight/2 - kPieceHeight/2;
+
+        for(size_t boardCol = 0; boardCol < boardCols; boardCol++) {
+            size_t screenCol = getCellCol(boardCol, boardCols) + kCellWidth/2 - kCellHeight/2;
+
+            char cell = getCell(board, boardRow, boardCol);
+            size_t palette = (cell & kWhiteFlag) ? kWhitePalette : kBlackPalette;
+            cell = pieceDispFromVal(cell);
+
+            if(cell == kEmptyCell) continue;            
+
+            wattron(stdscr, COLOR_PAIR(palette));
+            
+            for(size_t dRow = 0; dRow < kPieceHeight; dRow++) {
+                for(size_t dCol = 0; dCol < kPieceWidth; dCol++) {
+                    char dispCh = ' ';
+                    
+                    if(dRow == kPieceHeight/2 && dCol == kPieceWidth/2) {
+                        dispCh = cell;
+                    } else if((dRow == 0 || dRow == kPieceHeight-1) && (dCol == 0 || dCol == kPieceWidth-1)) {
+                        dispCh = '+';
+                    } else if(dRow == 0 || dRow == kPieceHeight-1){
+                        dispCh = '=';
+                    } else if(dCol == 0 || dCol == kPieceWidth-1) {
+                        dispCh = '|';
+                    }
+                    
+                    mvaddch(screenRow + dRow, screenCol + dCol, dispCh);
+                }
+            }
+
+            refresh();
+            wattroff(stdscr, COLOR_PAIR(palette)); 
+        }
+    }
 
     refresh();
 }

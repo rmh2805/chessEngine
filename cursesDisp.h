@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "chess.h"
 #include "chessConst.h"
 #include "board.h"
 
