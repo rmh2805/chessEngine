@@ -4,6 +4,9 @@
 #define kCellWidth 11
 #define kCellHeight 5
 
+#define kPieceWidth 5
+#define kPieceHeight 3
+
 static size_t screenWidth = 0;
 static size_t screenHeight = 0;
 

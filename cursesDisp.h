@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "chessConst.h"
 #include "board.h"
 
 int cursesInit(board_t board);
