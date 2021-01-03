@@ -33,7 +33,7 @@ testBoard: testBoard.o board.o printDisp.o chess.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 	$(ECHO)
 
-testDisp: testDisp.o board.o printDisp.o chess.o
+testDisp: testDisp.o board.o printDisp.o cursesDisp.o chess.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 	$(ECHO)
 

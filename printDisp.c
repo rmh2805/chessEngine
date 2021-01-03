@@ -51,6 +51,7 @@ void printMsg(const char * msg) {
 }
 
 void printScore(const char * score) {
+    printf("===========================================================\n");
     printf("%s\n", score);
 }
 
