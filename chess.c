@@ -30,3 +30,41 @@ void setBoard(board_t board) {
     setCell(board, 0, 4, kKingVal, true);
     setCell(board, 7, 4, kKingVal, false);
 }
+
+char pieceDispFromVal(char val) {
+    switch(val & kColorMask) {
+        case kPawnVal:
+            return kPawnChar;
+        case kRookVal:
+            return kRookChar;
+        case kKnightVal:
+            return kKnightChar;
+        case kBishopVal:
+            return kBishopChar;
+        case kQueenVal:
+            return kQueenChar;
+        case kKingVal:
+            return kKingChar;
+    }
+    return kEmptyCell;
+}
+
+char pieceValFromDisp(char disp) {
+    switch(disp) {
+    case kPawnChar:
+        return kPawnVal;
+    case kRookChar:
+        return kRookVal;
+    case kKnightChar:
+        return kKnightVal;
+    case kBishopChar:
+        return kBishopVal;
+    case kQueenChar:
+        return kQueenVal;
+    case kKingChar:
+        return kKingVal;
+    }
+
+    return kEmptyCell;
+}
+

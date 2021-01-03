@@ -9,5 +9,7 @@
 
 void setBoard(board_t board);
 
+char pieceDispFromVal(char val);
+char pieceValFromDisp(char disp);
 
 #endif //_CHESS_H_
