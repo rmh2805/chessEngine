@@ -19,7 +19,7 @@ CFLAGS=-Wall -std=c99 -Wextra -pedantic -ggdb
 #
 #	Main Target
 #
-main: testDisp
+main: testMove
 
 #
 #	Multiple Targets
@@ -34,6 +34,10 @@ testBoard: testBoard.o board.o printDisp.o chess.o
 	$(ECHO)
 
 testDisp: testDisp.o board.o printDisp.o cursesDisp.o chess.o
+	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
+	$(ECHO)
+
+testMove: testMove.o board.o printDisp.o cursesDisp.o chess.o pieceMove.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 	$(ECHO)
 
@@ -52,3 +56,4 @@ clean:
 realclean: clean
 	-rm testBoard
 	-rm testDisp
+	-rm testMove
