@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "board.h"
 #include "chess.h"
@@ -16,7 +17,7 @@ int main(int argc, char** argv) {
     //Parse arguments
     DispFunc dispFunc = getCursesDisp();
 
-    for(size_t i = 1; i < argc; i++) {
+    for(int i = 1; i < argc; i++) {
         if(strncmp(kPrintArg, argv[i], strlen(kPrintArg)) == 0) {
             dispFunc = getPrintDisp();
         }
@@ -37,11 +38,19 @@ int main(int argc, char** argv) {
     }
 
     //Initialize the display
+    if(dispFunc.InitDisp(board) != EXIT_SUCCESS) {
+        printf("Failed to initialize the display. Exit failure\n");
+        delBoard(board);
+        delGameStats(stats);
+        return EXIT_FAILURE;
+    }
 
     //Run the tests
+    moveLegal(stats, board, 0, 0, 1, 1);
 
     //Clean up
     delBoard(board);
     delGameStats(stats);
-
+    
+    dispFunc.CloseDisp();
 }
